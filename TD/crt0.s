@@ -9,7 +9,7 @@ _start:
   bl main
 
 _exit:
-  b exit
+  b _exit
 
 stackptr:
   .word 0x10000000

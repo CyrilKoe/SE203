@@ -14,7 +14,7 @@ CC = arm-none-eabi-gcc
 all: prog
 
 prog: $(OBJ_C) $(OBJ_S)
-	$(CC) $(LINK_FLAGS) $(SOURC_C) $(SOURC_S) -o main
+	$(CC) $(LINK_FLAGS) $(OBJ_C) $(OBJ_S) -o main
 
 $(OBJ_C): %.o: %.c
 	$(CC) $(C_FLAGS) -c $< -o $@
