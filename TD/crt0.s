@@ -12,4 +12,4 @@ _exit:
   b _exit
 
 stackptr:
-  .word 0x10000000
+  .word _stackptr

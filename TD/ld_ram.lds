@@ -8,7 +8,11 @@ SECTIONS {
   .text : { *(.text) } >sram1
   .data : { *(.data) } >sram1
   .rodata : { *(.rodata) } >sram1
-  .bss : { *(.bss) *(COMMON) } >sram1
+  .bss : {
+    _bss_start = .;
+    *(.bss) *(COMMON)
+    _bss_end = .;
+    } >sram1
 }
-
+_stackptr = 0x10032768;
 ENTRY(_start)
