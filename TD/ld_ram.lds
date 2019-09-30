@@ -1,5 +1,5 @@
 MEMORY {
-  flash : ORIGIN = 0x80000000, LENGTH = 1M
+  flash : ORIGIN = 0x08000000, LENGTH = 1M
   sram1 : ORIGIN = 0x20000000, LENGTH = 96k
   sram2 : ORIGIN = 0x10000000, LENGTH = 32k
 }
@@ -14,5 +14,5 @@ SECTIONS {
     _bss_end = .;
     } >sram1
 }
-_stackptr = 0x10032768;
+_stackptr = 0x10032768+4;
 ENTRY(_start)
