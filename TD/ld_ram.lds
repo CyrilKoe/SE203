@@ -1,4 +1,4 @@
-_start = 0x20000000;
+_start = main;
 
 MEMORY {
   flash : ORIGIN = 0x80000000, LENGTH = 1M
