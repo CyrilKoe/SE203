@@ -1,5 +1,3 @@
-_start = main;
-
 MEMORY {
   flash : ORIGIN = 0x80000000, LENGTH = 1M
   sram1 : ORIGIN = 0x20000000, LENGTH = 96k
