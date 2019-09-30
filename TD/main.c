@@ -7,14 +7,14 @@ int fibo(int);
 
 int main()
 {
-  return fibo(8);
+  b++;
+  c = fibo(a);
+  return c;
 }
 
 int fibo(int n){
-  switch (n)
-  {
-    case 1: return 1;
-    case 2: return 1;
-    default: return fibo(n-1) + fibo(n-2);
-  }
+  if(n>=2)
+    return fibo(n-1) + fibo(n-2);
+  else
+    return 1;
 }
