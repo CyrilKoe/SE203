@@ -1,5 +1,6 @@
 int a = 8;
-int b = 0;
+int b;
+int c = 0;
 
 int fibo(int);
 
