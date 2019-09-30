@@ -14,5 +14,5 @@ SECTIONS {
     _bss_end = .;
     } >sram1
 }
-_stackptr = 0x10032768+4;
+_stackptr = 0x10032000;
 ENTRY(_start)
