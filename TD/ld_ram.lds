@@ -14,5 +14,5 @@ SECTIONS {
     _bss_end = .;
     } >sram1
 }
-_stackptr = 0x10001024;
+_stackptr = ORIGIN(sram1)+LENGTH(sram1);
 ENTRY(_start)
