@@ -1,26 +1,25 @@
 #include <stdint.h>
+#include "GPIO.h"
 
-
-#define RCC_AHB2ENR (*(volatile uint32_t *) 0x4002104C)
-#define GPIOB_MODER (*(volatile uint32_t *) 0x48000400)
-#define GPIOB_BSRR (*(volatile uint32_t *) 0x48000418)
-#define GPIOB_ODR (*(volatile uint32_t *) 0x48000414)
 
 /* Active l'horloge du bloc GPIO B
 (Place dans le registre RCC_AHB2ENR la valeur 1 au bit 1 (GPIOBEN))
+Puis du bloc GPIO C (bit 2)
 Met la broche 15 du bloc GPIO B en mode sortie
 */
 void led_init() {
   RCC_AHB2ENR |= (1 << 1);
-  GPIOB_MODER = 0xDFFFFEBF;
+  RCC_AHB2ENR |= (1 << 2);
+  GPIOB_MODER &= ~(0b11<<28);
+  GPIOB_MODER |= (0b01<<28);
 }
 
 // Place le bit 1 sur la partie SET
 void led_on() {
-  GPIOB_BSRR = 0b0100000000000000;
+  GPIOB_BSRR = (1<<14);
 }
 
 // Place le bit 1 sur la partie RESET
 void led_off() {
-  GPIOB_BSRR = 0b0100000000000000 << 16;
+  GPIOB_BSRR = (1<<14) << 16;
 }
