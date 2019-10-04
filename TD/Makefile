@@ -2,7 +2,7 @@ PROG = main
 
 LINKER_SCRIPT = ld_ram.lds
 
-SOURCES = main.c init.c
+SOURCES = main.c init.c led.c
 CRT0 = crt0.s
 OBJECTS = $(SOURCES:%.c=%.o) $(CRT0:%.s=%.o)
 DEPENDANCY = $(subst .c,.d,$(SOURCES))
