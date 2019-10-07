@@ -2,9 +2,9 @@ PROG = main
 
 LINKER_SCRIPT = ld_ram.lds
 
-SOURCES = main.c init.c led.c
+SOURCES = main.c init.c led.c uart.c
 CRT0 = crt0.s
-OBJECTS = $(SOURCES:%.c=%.o) $(CRT0:%.s=%.o)
+OBJECTS = $(SOURCES:%.c=%.o) $(CRT0:%.s=%.o) clocks.o
 DEPENDANCY = $(subst .c,.d,$(SOURCES))
 
 ifndef ubuntu
@@ -19,12 +19,12 @@ endif
 CC = $(PREFIX)-gcc
 AS = $(CC)
 
-CFLAGS = -Wall -Werror -g -O1
+CFLAGS =  -Wall -Werror -g -O1 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS = -T $(LINKER_SCRIPT) -Wl,--build-id=none
 ASFLAGS = -c
 
 LDLIBS = -nostdlib
-TARGET_ARCH = -mthumb
+TARGET_ARCH = -mcpu=cortex-m4 -mthumb
 TARGET_MACH = -mcpu=cortex-m4 -mthumb
 
 VPATH = . ./CMSIS/Device/ST/STM32L4xx/Include ./CMSIS/Include ./clocks
@@ -40,8 +40,8 @@ $(PROG): $(OBJECTS) $(LINKER_SCRIPT)
 
 .PHONY: clean
 clean:
-	rm *.o
 	rm *.d
+	rm *.o
 
 .PHONY: startgdbserver
 startgdbserver:

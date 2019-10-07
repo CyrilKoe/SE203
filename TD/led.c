@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include "led.h"
-#include "GPIO.h"
 #include "./CMSIS/Device/ST/STM32L4xx/Include/stm32l475xx.h"
 
 
