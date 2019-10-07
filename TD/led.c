@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include "led.h"
 #include "GPIO.h"
+#include "./CMSIS/Device/ST/STM32L4xx/Include/stm32l475xx.h"
 
 
 /* Active l'horloge du bloc GPIO B
@@ -9,20 +10,19 @@ Puis du bloc GPIO C (bit 2)
 Met la broche 15 du bloc GPIO B en mode sortie
 */
 void led_init() {
-  RCC_AHB2ENR |= (1 << 1);
-  RCC_AHB2ENR |= (1 << 2);
-  GPIOB_MODER &= ~(0b11<<(14*2));
-  GPIOB_MODER |= (0b01<<(14*2));
+  RCC->AHB2ENR = RCC->AHB2ENR | RCC_AHB2ENR_GPIOBEN;
+  RCC->AHB2ENR = RCC->AHB2ENR | RCC_AHB2ENR_GPIOCEN;
+  GPIOB -> MODER = (GPIOB -> MODER & ~GPIO_MODER_MODE14_Msk) | (0b01 << GPIO_MODER_MODE14_Pos);
 }
 
 // Place le bit 1 sur la partie SET de la Led 2 (PB14)
 void led_on() {
-  GPIOB_BSRR = (1<<14);
+  GPIOB -> BSRR = GPIO_BSRR_BS14;
 }
 
 // Place le bit 1 sur la partie RESET de la Led 2 (PB14)
 void led_off() {
-  GPIOB_BSRR = (1<<14) << 16;
+  GPIOB -> BSRR = GPIO_BSRR_BR14;
 }
 
 /* Change l'était des leds 3 et 4

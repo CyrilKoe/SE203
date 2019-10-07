@@ -7,10 +7,14 @@ CRT0 = crt0.s
 OBJECTS = $(SOURCES:%.c=%.o) $(CRT0:%.s=%.o)
 DEPENDANCY = $(subst .c,.d,$(SOURCES))
 
-PREFIX = arm-linux-gnueabi
 ifndef ubuntu
 PREFIX = arm-none-eabi
+DB = $(PREFIX)-gdb
+else
+PREFIX = arm-linux-gnueabi
+DB = gdb-multiarch
 endif
+
 
 CC = $(PREFIX)-gcc
 AS = $(CC)
@@ -22,6 +26,8 @@ ASFLAGS = -c
 LDLIBS = -nostdlib
 TARGET_ARCH = -mthumb
 TARGET_MACH = -mcpu=cortex-m4 -mthumb
+
+VPATH = . ./CMSIS/Device/ST/STM32L4xx/Include ./CMSIS/Include ./clocks
 
 all: $(PROG)
 
@@ -40,12 +46,6 @@ clean:
 .PHONY: startgdbserver
 startgdbserver:
 	JLinkGDBServer -device STM32L475VG -endian little -if SWD -speed auto -ir -LocalhostOnly
-
-ifndef ubuntu
-DB = $(PREFIX)-gdb
-else
-DB = gdb-multiarch
-endif
 
 .PHONY: debug
 debug:
