@@ -58,11 +58,11 @@ void uart_puts(const uint8_t *s){
 
 void uart_gets(uint8_t *s, size_t size){
   unsigned int k = 0;
-  while(k < size) {
+
+  do{
     *s = uart_getchar();
     s++;
     k++;
-  }
-  uart_putchar('\n');
-  uart_putchar('\r');
+  } while((*s != '\0') && (*s != '\n') && k < size);
+  uart_putchar('\0');
 }
