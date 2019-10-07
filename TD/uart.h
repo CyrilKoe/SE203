@@ -3,10 +3,12 @@
 
 #include "./CMSIS/Device/ST/STM32L4xx/Include/stm32l475xx.h"
 #include "./CMSIS/Device/ST/STM32L4xx/Include/stm32l4xx.h"
+#include <stddef.h>
 
 void uart_init();
 void uart_putchar(uint8_t c);
 uint8_t uart_getchar();
 void uart_puts(const uint8_t *s);
+void uart_gets(uint8_t *s, size_t size);
 
 #endif

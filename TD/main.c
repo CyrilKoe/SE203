@@ -8,20 +8,19 @@ int c = 0;
 
 int fibo(int);
 void wait(unsigned int n);
+void init_all();
 
 int main()
 {
-  clocks_init();
-  uart_init();
-  led_init();
-  led_off();
-  unsigned char s[] = "It works\n" ;
-  uart_puts(s);
+  init_all();
+
+  unsigned char g[5];
 
   int a = 0;
 
   while(1) {
-    uart_getchar();
+    uart_gets(g, sizeof(g));
+    uart_puts(g);
     a++;
     if(a%2)
       led_on();
@@ -30,6 +29,12 @@ int main()
   }
   
   return 0;
+}
+
+void init_all() {
+  clocks_init();
+  uart_init();
+  led_init();
 }
 
 int fibo(int n){

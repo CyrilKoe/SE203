@@ -55,3 +55,14 @@ void uart_puts(const uint8_t *s){
     c = *s;
   }
 }
+
+void uart_gets(uint8_t *s, size_t size){
+  unsigned int k = 0;
+  while(k < size) {
+    *s = uart_getchar();
+    s++;
+    k++;
+  }
+  uart_putchar('\n');
+  uart_putchar('\r');
+}
