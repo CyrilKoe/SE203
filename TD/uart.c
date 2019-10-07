@@ -38,7 +38,19 @@ void uart_init() {
 }
 
 void uart_putchar(uint8_t c){
-  while(!(USART1->ISR & USART_ISR_TXE)){}
-  //USART1->TDR = USART1->TDR & ~USART_TDR_TDR_Msk;
+  while(!READ_BIT(USART1->ISR,USART_ISR_TXE)){}
   USART1->TDR = c;
+}
+
+uint8_t uart_getchar() {
+	while (!READ_BIT(USART1->ISR,USART_ISR_RXNE)){}
+	return (USART1->RDR & USART_RDR_RDR);
+}
+
+void uart_puts(const uint8_t *s){
+  const uint8_t c = *s;
+  while(!c) {
+    uart_putchar(c);
+    s++;
+  }
 }

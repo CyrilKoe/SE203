@@ -13,10 +13,19 @@ int main()
 {
   clocks_init();
   uart_init();
-  uart_putchar('a');
+  led_init();
+  led_off();
+  uart_putchar('-');
+  uart_putchar('-');
+  uart_putchar('-');
   uart_putchar('\r');
   uart_putchar('\n');
-  led_init();
+
+  while(1) {
+    uart_getchar();
+    led_on();
+  }
+  
 
   return 0;
 }
