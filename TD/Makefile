@@ -50,3 +50,7 @@ startgdbserver:
 .PHONY: debug
 debug:
 	 $(DB) main
+
+.PHONY: tio
+tio:
+	tio -b 115200 -d 8 -s 1 -p none -f none /dev/ttyACM0
