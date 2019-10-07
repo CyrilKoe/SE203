@@ -48,9 +48,10 @@ uint8_t uart_getchar() {
 }
 
 void uart_puts(const uint8_t *s){
-  const uint8_t c = *s;
-  while(!c) {
+  uint8_t c = *s;
+  while(c != '\0') {
     uart_putchar(c);
     s++;
+    c = *s;
   }
 }

@@ -15,18 +15,20 @@ int main()
   uart_init();
   led_init();
   led_off();
-  uart_putchar('-');
-  uart_putchar('-');
-  uart_putchar('-');
-  uart_putchar('\r');
-  uart_putchar('\n');
+  unsigned char s[] = "It works\n" ;
+  uart_puts(s);
+
+  int a = 0;
 
   while(1) {
     uart_getchar();
-    led_on();
+    a++;
+    if(a%2)
+      led_on();
+    else
+      led_off();
   }
   
-
   return 0;
 }
 
