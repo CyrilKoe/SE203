@@ -27,21 +27,19 @@ void led_off() {
 
 /* Change l'était des leds 3 et 4
 en modifiant le mode d'utilisation et la valeur sortie en PC9
-Rq : Il y a un scintillement d'un cycle avec cette implémentation,
-est ce problématique?
 */
 void led(led_state state) {
-  GPIOC_MODER &= ~(0b11<<(9*2));
   switch(state){
     case LED_YELLOW:
-      GPIOC_MODER |= (0b01<<(9*2));
-      GPIOC_BSRR = (1<<9);
+      GPIOC -> MODER = (GPIOC -> MODER & ~GPIO_MODER_MODE9_Msk) | (0b01 << GPIO_MODER_MODE9_Pos);
+      GPIOC -> BSRR = GPIO_BSRR_BS9;
       break;
     case LED_BLUE:
-      GPIOC_MODER |= (0b01<<(9*2));
-      GPIOC_BSRR = (1<<9)<<16;
+      GPIOC -> MODER = (GPIOC -> MODER & ~GPIO_MODER_MODE9_Msk) | (0b01 << GPIO_MODER_MODE9_Pos);
+      GPIOC -> BSRR = GPIO_BSRR_BR9;
       break;
     case LED_OFF:
+      GPIOC -> MODER = (GPIOC -> MODER & ~GPIO_MODER_MODE9_Msk);
       break;
   }
 }
