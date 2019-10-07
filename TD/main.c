@@ -13,6 +13,9 @@ int main()
 {
   clocks_init();
   uart_init();
+  uart_putchar('a');
+  uart_putchar('\r');
+  uart_putchar('\n');
   led_init();
 
   return 0;
