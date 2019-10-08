@@ -54,6 +54,7 @@ void uart_puts(const uint8_t *s){
     s++;
     c = *s;
   }
+  uart_putchar('\0');
 }
 
 void uart_gets(uint8_t *s, size_t size){
@@ -61,8 +62,11 @@ void uart_gets(uint8_t *s, size_t size){
 
   do{
     *s = uart_getchar();
+    if(*s == '\r') {
+      *s = '\0';
+      break;
+    }
     s++;
     k++;
-  } while((*s != '\0') && (*s != '\n') && k < size);
-  uart_putchar('\0');
+  } while(k < size);
 }
