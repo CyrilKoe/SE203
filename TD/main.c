@@ -4,7 +4,6 @@
 #include <string.h>
 #include <math.h>
 
-int fibo(int);
 void wait(unsigned int n);
 void init_all();
 void int_to_hexa_string(uint32_t i, uint8_t* str);
@@ -17,15 +16,18 @@ uint32_t sum = 0;
 int main()
 {
   init_all();
+  
+  led(LED_OFF);
+  led_on();
 
   uart_putchar('\n');
   uart_putchar('\r');
 
-  led_off();
-
   for(uint8_t i = 0; i<100; i++) {
     uart_gets(&g[i], 1);
   }
+
+  led(LED_BLUE);
 
   for(uint8_t i = 0; i<100; i++) {
     sum+=g[i];
@@ -36,7 +38,7 @@ int main()
   uart_puts((uint8_t*) "Résultat de la somme : \n\r");
   uart_puts(s);
 
-  led_on();
+  led(LED_GREEN);
 
   return 0;
 }
@@ -51,6 +53,8 @@ void int_to_hexa_string(uint32_t i, uint8_t* str) {
   uint8_t digits[4] = {0,0,0,0};
   uint32_t diviseur = 1;
   uint8_t digit = 0;
+  str[0] = '0';
+  str[1] = 'x';
 
   for(uint8_t k = 0; k<4; k++) {
     diviseur *= 16;
@@ -59,8 +63,6 @@ void int_to_hexa_string(uint32_t i, uint8_t* str) {
     digits[3-k] = digit;
   }
 
-  str[0] = '0';
-  str[1] = 'x';
   for(uint8_t k = 0; k<4; k++) {
     digit = digits[k];
     str[k+2] = int_to_hexa_char(digit);
@@ -76,13 +78,6 @@ uint8_t int_to_hexa_char(uint8_t i) {
     return ('a'+i-10);
 
   } else return 0;
-}
-
-int fibo(int n){
-  if(n>=2)
-    return fibo(n-1) + fibo(n-2);
-  else
-    return 1;
 }
 
 void wait(unsigned int n){
