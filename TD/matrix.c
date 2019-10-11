@@ -22,17 +22,13 @@ C0=PB2 C1=PA15 C2=PA2 C3=PA7 C4=PA6 C5=PA5 C6=PB0 C7=PA3
 #define pulse_SCK() do{SCK(0); wait(3); SCK(1); wait(3); SCK(0); wait(3);}while(0)
 #define pulse_LAT() do{LAT(1); wait(3); LAT(0); wait(3); LAT(1); wait(3);}while(0)
 
-typedef struct {
-  uint8_t r;
-  uint8_t g;
-  uint8_t b;
-} rgb_color;
 
 static void wait(unsigned int n);
 void send_byte(uint8_t val, int bank);
 void deactivate_rows();
 void activate_row(int row);
 void mat_set_row(int row, const rgb_color *val);
+void init_bank0();
 
 void matrix_init() {
     //Enable clock GPIOB  et USART1
@@ -61,6 +57,7 @@ void matrix_init() {
     wait(10000);
     //RST = 1
     GPIOC -> BSRR = GPIO_BSRR_BS3;
+    init_bank0();
 }
 
 void deactivate_rows() {
@@ -101,5 +98,12 @@ void mat_set_row(int row, const rgb_color *val) {
         send_byte((val+k)->r,1);
     }
     activate_row(row);
+    pulse_LAT();
+}
+
+void init_bank0() {
+    for(int k = 0; k<8; k++) {
+        send_byte(0xff, 0);
+    }
     pulse_LAT();
 }

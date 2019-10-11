@@ -1,8 +1,10 @@
 #include "led.h"
 #include "uart.h"
 #include "clocks/clocks.h"
+#include "matrix.h"
 #include <string.h>
 #include <math.h>
+
 
 void wait(unsigned int n);
 void init_all();
@@ -16,29 +18,17 @@ uint32_t sum = 0;
 int main()
 {
   init_all();
-  
-  led(LED_OFF);
-  led_on();
 
-  uart_putchar('\n');
-  uart_putchar('\r');
-
-  for(uint8_t i = 0; i<100; i++) {
-    uart_gets(&g[i], 1);
+  rgb_color pxl_column[8];
+  for(int k = 0; k<8; k++) {
+    pxl_column[k].r = 0;
+    pxl_column[k].g = 0xff;
+    pxl_column[k].b = 0;
   }
+  mat_set_row(2, pxl_column);
 
-  led(LED_BLUE);
 
-  for(uint8_t i = 0; i<100; i++) {
-    sum+=g[i];
-  }
 
-  int_to_hexa_string(sum, s);
-
-  uart_puts((uint8_t*) "Résultat de la somme : \n\r");
-  uart_puts(s);
-
-  led(LED_YELLOW);
 
   return 0;
 }
@@ -47,6 +37,7 @@ void init_all() {
   clocks_init();
   uart_init();
   led_init();
+  matrix_init();
 }
 
 void int_to_hexa_string(uint32_t i, uint8_t* str) {
