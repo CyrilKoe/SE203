@@ -13,6 +13,8 @@ typedef struct {
 
 void matrix_init();
 void mat_set_row(int row, const rgb_color *val);
+void desactivate_rows();
+void activate_row(int row);
 
 
 #endif //MATRIX_H

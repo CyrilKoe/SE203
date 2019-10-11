@@ -25,10 +25,19 @@ int main()
     pxl_column[k].g = 0xff;
     pxl_column[k].b = 0;
   }
-  mat_set_row(2, pxl_column);
+  pxl_column[1].r = 0xff;
+  pxl_column[1].g = 0;
+  pxl_column[1].b = 0;
 
+  mat_set_row(5, pxl_column);
 
-
+  while(1) {
+    for(int k = 0; k<8; k++) {
+      desactivate_rows();
+      activate_row(k);
+      wait(1000000);
+    }
+  }
 
   return 0;
 }

@@ -28,7 +28,7 @@ void uart_init() {
   //1 start, 8 data
   USART1->CR1 = 0;
   USART1->CR2 = 0;
-  
+
   //Enable
   USART1->CR1 = USART1->CR1 | USART_CR1_UE;
   USART1->CR1 = USART1->CR1 | USART_CR1_RE;

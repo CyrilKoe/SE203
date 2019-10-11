@@ -54,13 +54,13 @@ void matrix_init() {
     GPIOB -> BSRR = GPIO_BSRR_BR0 | GPIO_BSRR_BR14;
     GPIOA -> BSRR = GPIO_BSRR_BR15 | GPIO_BSRR_BR2 | GPIO_BSRR_BR7 | GPIO_BSRR_BR6 | GPIO_BSRR_BR5 | GPIO_BSRR_BR3;
 
-    wait(10000);
+    wait(10000000);
     //RST = 1
     GPIOC -> BSRR = GPIO_BSRR_BS3;
     init_bank0();
 }
 
-void deactivate_rows() {
+void desactivate_rows() {
     ROW0(0);ROW1(0);ROW2(0);ROW3(0);
     ROW4(0);ROW5(0);ROW6(0);ROW7(0);
 }
@@ -80,8 +80,10 @@ void activate_row(int row) {
 
 void send_byte(uint8_t val, int bank){
     SB(bank);
+    int bit;
     for(int k = 7; k>=0; k--) {
-        SDA((val >> k) & 1);
+        bit = (val >> k) & 1;
+        SDA(bit);
         wait(1);
         pulse_SCK();
     }
