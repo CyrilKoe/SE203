@@ -58,10 +58,6 @@ void matrix_init() {
     //RST = 1
     GPIOC -> BSRR = GPIO_BSRR_BS3;
     init_bank0();
-    ROW0(0);ROW1(1);ROW2(0);ROW3(0);
-    ROW4(0);ROW5(0);ROW6(0);ROW7(0);
-    ROW0(0);ROW1(0);ROW2(1);ROW3(0);
-    ROW4(0);ROW5(0);ROW6(0);ROW7(0);
 }
 
 void desactivate_rows() {
@@ -99,7 +95,7 @@ static void wait(unsigned int n){
 }
 
 void mat_set_row(int row, const rgb_color *val) {
-    for(int k = 7; k > 0; k--) {
+    for(int k = 7; k >= 0; k--) {
         send_byte((val+k)->b,1);
         send_byte((val+k)->g,1);
         send_byte((val+k)->r,1);

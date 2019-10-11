@@ -15,31 +15,34 @@ uint8_t g[100];
 uint8_t s[6];
 uint32_t sum = 0;
 
+
+rgb_color pxl_column[8];
+
+//0 -> rien, 1 -> 0 et 7, 2 -> 1, 3 -> 2, 6 -> 5
+
+
 int main()
 {
   matrix_init();
   init_all();
   desactivate_rows();
-  activate_row(3);
-  activate_row(4);
-  desactivate_rows();
 
-  rgb_color pxl_column[8];
   for(int k = 0; k<8; k++) {
-    pxl_column[k].r = 0;
-    pxl_column[k].g = 0x0f;
-    pxl_column[k].b = 0x0f;
+    pxl_column[k].b = 1<<k;
   }
-
-  mat_set_row(5, pxl_column);
 
   while(1) {
+
     for(int k = 0; k<8; k++) {
       desactivate_rows();
-      activate_row(k);
-      wait(1000000);
+      for(int i = 0; i<8; i++)
+        pxl_column[i].r = 1<<k;
+      mat_set_row(k, pxl_column);
+      wait(10000);
     }
+
   }
+  
 
   return 0;
 }
