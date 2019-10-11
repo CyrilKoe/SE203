@@ -38,7 +38,7 @@ int main()
   uart_puts((uint8_t*) "Résultat de la somme : \n\r");
   uart_puts(s);
 
-  led(LED_GREEN);
+  led(LED_YELLOW);
 
   return 0;
 }
