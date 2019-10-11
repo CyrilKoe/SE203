@@ -14,18 +14,19 @@ uint8_t int_to_hexa_char(uint8_t i);
 uint8_t g[100];
 uint8_t s[6];
 uint32_t sum = 0;
+extern uint32_t _binary___Others_image_raw_start;
+extern uint32_t _binary___Others_image_raw_end;
 
 
-rgb_color pxl_column[8];
+rgb_color my_matrix[8][8];
 
 //0 -> rien, 1 -> 0 et 7, 2 -> 1, 3 -> 2, 6 -> 5
 
 
 int main()
 {
-  matrix_init();
   init_all();
-  desactivate_rows();
+  desactivate_rows();  
 
   for(int k = 0; k<8; k++) {
     pxl_column[k].b = 1<<k;
@@ -51,6 +52,7 @@ void init_all() {
   clocks_init();
   uart_init();
   led_init();
+  matrix_init();
 }
 
 void int_to_hexa_string(uint32_t i, uint8_t* str) {
