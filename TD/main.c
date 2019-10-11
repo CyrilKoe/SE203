@@ -17,17 +17,19 @@ uint32_t sum = 0;
 
 int main()
 {
+  matrix_init();
   init_all();
+  desactivate_rows();
+  activate_row(3);
+  activate_row(4);
+  desactivate_rows();
 
   rgb_color pxl_column[8];
   for(int k = 0; k<8; k++) {
     pxl_column[k].r = 0;
-    pxl_column[k].g = 0xff;
-    pxl_column[k].b = 0;
+    pxl_column[k].g = 0x0f;
+    pxl_column[k].b = 0x0f;
   }
-  pxl_column[1].r = 0xff;
-  pxl_column[1].g = 0;
-  pxl_column[1].b = 0;
 
   mat_set_row(5, pxl_column);
 
@@ -46,7 +48,6 @@ void init_all() {
   clocks_init();
   uart_init();
   led_init();
-  matrix_init();
 }
 
 void int_to_hexa_string(uint32_t i, uint8_t* str) {

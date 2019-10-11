@@ -54,10 +54,14 @@ void matrix_init() {
     GPIOB -> BSRR = GPIO_BSRR_BR0 | GPIO_BSRR_BR14;
     GPIOA -> BSRR = GPIO_BSRR_BR15 | GPIO_BSRR_BR2 | GPIO_BSRR_BR7 | GPIO_BSRR_BR6 | GPIO_BSRR_BR5 | GPIO_BSRR_BR3;
 
-    wait(10000000);
+    wait(6000000);
     //RST = 1
     GPIOC -> BSRR = GPIO_BSRR_BS3;
     init_bank0();
+    ROW0(0);ROW1(1);ROW2(0);ROW3(0);
+    ROW4(0);ROW5(0);ROW6(0);ROW7(0);
+    ROW0(0);ROW1(0);ROW2(1);ROW3(0);
+    ROW4(0);ROW5(0);ROW6(0);ROW7(0);
 }
 
 void desactivate_rows() {
@@ -65,16 +69,17 @@ void desactivate_rows() {
     ROW4(0);ROW5(0);ROW6(0);ROW7(0);
 }
 
+
 void activate_row(int row) {
     switch(row){
-        case 0: ROW0(1);
-        case 1: ROW1(1);
-        case 2: ROW2(1);
-        case 3: ROW3(1);
-        case 4: ROW4(1);
-        case 5: ROW5(1);
-        case 6: ROW6(1);
-        case 7: ROW7(1);
+        case 0: ROW0(1); break;
+        case 1: ROW1(1); break;
+        case 2: ROW2(1); break;
+        case 3: ROW3(1); break;
+        case 4: ROW4(1); break;
+        case 5: ROW5(1); break;
+        case 6: ROW6(1); break;
+        case 7: ROW7(1); break;
     }
 }
 
