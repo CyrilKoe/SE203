@@ -4,7 +4,7 @@ LINKER_SCRIPT = ld_ram.lds
 
 SOURCES = main.c init.c led.c uart.c matrix.c
 CRT0 = crt0.s
-OBJECTS = $(SOURCES:%.c=%.o) $(CRT0:%.s=%.o) clocks.o
+OBJECTS = $(SOURCES:%.c=%.o) $(CRT0:%.s=%.o) clocks.o image.o
 DEPENDANCY = $(subst .c,.d,$(SOURCES))
 
 ifndef ubuntu
@@ -27,7 +27,7 @@ LDLIBS = -nostdlib
 TARGET_ARCH = -mcpu=cortex-m4 -mthumb
 TARGET_MACH = -mcpu=cortex-m4 -mthumb
 
-VPATH = . ./CMSIS/Device/ST/STM32L4xx/Include ./CMSIS/Include ./clocks
+VPATH = . ./CMSIS/Device/ST/STM32L4xx/Include ./CMSIS/Include ./clocks ./Others
 
 all: $(PROG)
 
@@ -37,6 +37,9 @@ all: $(PROG)
 
 $(PROG): $(OBJECTS) $(LINKER_SCRIPT)
 	$(LINK.c) $^ $(LDLIBS) -o $@
+
+image.o: image.raw
+	$(PREFIX)-objcopy -I binary -O elf32-littlearm -B arm $< $@
 
 .PHONY: clean
 clean:
