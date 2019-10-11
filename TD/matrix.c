@@ -6,20 +6,21 @@ SB=PC5 LAT=PC4 RST=PC3 SCK=PB1 SDA=PA4
 C0=PB2 C1=PA15 C2=PA2 C3=PA7 C4=PA6 C5=PA5 C6=PB0 C7=PA3
 */
 
-#define RST(x) = (GPIOC -> BSRR = GPIO_BSRR_BR3 >> (16*x)
-#define SB(x) = GPIOC -> BSRR = GPIO_BSRR_BR5 >> (16*x)
-#define LAT(x) = GPIOC -> BSRR = GPIO_BSRR_BR4 >> (16*x)
-#define SDA(x) = GPIOA -> BSRR = GPIO_BSRR_BR4 >> (16*x)
-#define ROW0(x) = GPIOB -> BSRR = GPIO_BSRR_BR2 >> (16*x)
-#define ROW1(x) = GPIOA -> BSRR = GPIO_BSRR_BR15 >> (16*x)
-#define ROW2(x) = GPIOA -> BSRR = GPIO_BSRR_BR2 >> (16*x)
-#define ROW3(x) = GPIOA -> BSRR = GPIO_BSRR_BR7 >> (16*x)
-#define ROW4(x) = GPIOA -> BSRR = GPIO_BSRR_BR6 >> (16*x)
-#define ROW5(x) = GPIOA -> BSRR = GPIO_BSRR_BR5 >> (16*x)
-#define ROW6(x) = GPIOB -> BSRR = GPIO_BSRR_BR0 >> (16*x)
-#define ROW7(x) = GPIOA -> BSRR = GPIO_BSRR_BR3 >> (16*x)
-#define pulse_SCK() = do{SCK(0); wait(3); SCK(1); wait(3); SCK(0); wait(3)}while()
-#define pulse_LAT() = do{LAT(1); wait(3); LAT(0); wait(3); LAT(1); wait(3)}while()
+#define RST(x) (GPIOC -> BSRR = GPIO_BSRR_BR3 >> (16*x)
+#define SB(x) GPIOC -> BSRR = GPIO_BSRR_BR5 >> (16*x)
+#define LAT(x) GPIOC -> BSRR = GPIO_BSRR_BR4 >> (16*x)
+#define SDA(x) GPIOA -> BSRR = GPIO_BSRR_BR4 >> (16*x)
+#define SCK(x) GPIOB -> BSRR = GPIO_BSRR_BR1 >> (16*x)
+#define ROW0(x) GPIOB -> BSRR = GPIO_BSRR_BR2 >> (16*x)
+#define ROW1(x) GPIOA -> BSRR = GPIO_BSRR_BR15 >> (16*x)
+#define ROW2(x) GPIOA -> BSRR = GPIO_BSRR_BR2 >> (16*x)
+#define ROW3(x) GPIOA -> BSRR = GPIO_BSRR_BR7 >> (16*x)
+#define ROW4(x) GPIOA -> BSRR = GPIO_BSRR_BR6 >> (16*x)
+#define ROW5(x) GPIOA -> BSRR = GPIO_BSRR_BR5 >> (16*x)
+#define ROW6(x) GPIOB -> BSRR = GPIO_BSRR_BR0 >> (16*x)
+#define ROW7(x) GPIOA -> BSRR = GPIO_BSRR_BR3 >> (16*x)
+#define pulse_SCK() do{SCK(0); wait(3); SCK(1); wait(3); SCK(0); wait(3);}while(0)
+#define pulse_LAT() do{LAT(1); wait(3); LAT(0); wait(3); LAT(1); wait(3);}while(0)
 
 typedef struct {
   uint8_t r;
@@ -95,9 +96,9 @@ static void wait(unsigned int n){
 
 void mat_set_row(int row, const rgb_color *val) {
     for(int k = 7; k > 0; k--) {
-        send_byte(*(val+k)->b,1);
-        send_byte(*(val+k)->g,1);
-        send_byte(*(val+k)->r,1);
+        send_byte((val+k)->b,1);
+        send_byte((val+k)->g,1);
+        send_byte((val+k)->r,1);
     }
     activate_row(row);
     pulse_LAT();
