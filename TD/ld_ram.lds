@@ -5,16 +5,19 @@ MEMORY {
 }
 
 SECTIONS {
+  .data : {
+    *vector_table*
+    *(.data)
+  } > sram1
   .text : {
     *(.text)
-    } > sram1
-  .data : {
-    *(.data)
-     } > sram1
-  .rodata : { *(.rodata) } >sram1
+  } > sram1
+  .rodata : {
+    *(.rodata)
+  } > sram1
   .bss : {
     *(.bss) *(COMMON)
-    } > sram1
+  } > sram1
 }
 _bss_start = ADDR(.bss);
 _bss_end = ADDR(.bss) + SIZEOF(.bss);

@@ -1,4 +1,6 @@
 #include <stdint.h>
+#define VTOR_REG (*(volatile uint32_t *) 0)
+
 
 #define MAKE_DEFAULT_HANDLER(myIRQ) \
         void __attribute__((weak)) myIRQ(void) { \
@@ -207,3 +209,8 @@ void *vector_table[] = {
     RNG_IRQHandler,
     FPU_IRQHandler
 };
+
+void irq_init(void) {
+    volatile uint32_t * const VTOR = (uint32_t *) 0x0;
+    *VTOR = ((uint32_t) vector_table);
+}
