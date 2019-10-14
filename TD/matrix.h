@@ -16,5 +16,9 @@ void mat_set_row(int row, const rgb_color *val);
 void desactivate_rows();
 void activate_row(int row);
 
+void inline wait(unsigned int n){
+  for(unsigned int i = 0; i<n; i++) asm volatile("nop");
+}
+
 
 #endif //MATRIX_H

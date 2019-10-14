@@ -2,9 +2,9 @@ PROG = main
 
 LINKER_SCRIPT = ld_ram.lds
 
-SOURCES = main.c init.c led.c uart.c matrix.c
+SOURCES = main.c init.c led.c uart.c matrix.c image.c
 CRT0 = crt0.s
-OBJECTS = $(SOURCES:%.c=%.o) $(CRT0:%.s=%.o) clocks.o image.o
+OBJECTS = $(SOURCES:%.c=%.o) $(CRT0:%.s=%.o) clocks.o raw_image.o
 DEPENDANCY = $(subst .c,.d,$(SOURCES))
 
 ifndef ubuntu
@@ -38,7 +38,7 @@ all: $(PROG)
 $(PROG): $(OBJECTS) $(LINKER_SCRIPT)
 	$(LINK.c) $^ $(LDLIBS) -o $@
 
-image.o: image.raw
+raw_image.o: image.raw
 	$(PREFIX)-objcopy -I binary -O elf32-littlearm -B arm $< $@
 
 .PHONY: clean
