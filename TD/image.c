@@ -6,7 +6,7 @@ rgb_color my_image[8][8];
 
 void image_init() {
     uint8_t * ptr;
-    ptr = (uint8_t *) _binary___Others_image_raw_start;
+    ptr = (uint8_t *) &_binary___Others_image_raw_start;
 
     for(int j = 0; j < 8; j++) {
         for(int i = 0; i < 8; i++) {
