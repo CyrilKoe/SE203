@@ -212,5 +212,5 @@ void *vector_table[] = {
 
 void irq_init(void) {
     volatile uint32_t * const VTOR = (uint32_t *) 0x0;
-    *VTOR = ((uint32_t) vector_table);
+    *VTOR |= (uint32_t) vector_table;
 }
