@@ -9,6 +9,12 @@
         }
 
 
+void default_handler(void) {
+  asm volatile("cpsid i");
+  while(1){}
+}
+
+
 MAKE_DEFAULT_HANDLER(Reset_Handler)
 MAKE_DEFAULT_HANDLER(NMI_Handler)
 MAKE_DEFAULT_HANDLER(HardFault_Handler)

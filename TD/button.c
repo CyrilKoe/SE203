@@ -22,5 +22,7 @@ void EXTI3_IRQHandler(void) {
   if(READ_BIT(EXTI->PR1, EXTI_PR1_PIF13)) {
     SET_BIT(EXTI->PR1, EXTI_PR1_PIF13);
     led_toggle();
+  } else {
+    default_handler();
   }
 }
