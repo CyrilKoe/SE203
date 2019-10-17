@@ -1,6 +1,9 @@
 #ifndef LED_H
 #define LED_H
 
+#include "./CMSIS/Device/ST/STM32L4xx/Include/stm32l475xx.h"
+#include <stdint.h>
+
 typedef enum led_state {LED_OFF, LED_YELLOW,LED_BLUE} led_state;
 
 
