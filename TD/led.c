@@ -1,6 +1,6 @@
 #include "led.h"
 
-
+static uint8_t led_status;
 
 /* Active l'horloge du bloc GPIO B
 (Place dans le registre RCC_AHB2ENR la valeur 1 au bit 1 (GPIOBEN))
@@ -16,11 +16,23 @@ void led_init() {
 // Place le bit 1 sur la partie SET de la Led 2 (PB14)
 void led_on() {
   GPIOB -> BSRR = GPIO_BSRR_BS14;
+  led_status = 1;
 }
 
 // Place le bit 1 sur la partie RESET de la Led 2 (PB14)
 void led_off() {
   GPIOB -> BSRR = GPIO_BSRR_BR14;
+  led_status = 0;
+}
+
+void led_toggle(){
+  if(led_status){
+    led_status = 0;
+    led_off();
+  } else {
+    led_status = 1;
+    led_on();
+  }
 }
 
 /* Change l'était des leds 3 et 4
