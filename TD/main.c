@@ -1,11 +1,14 @@
+#include <math.h>
+#include <string.h>
+
 #include "led.h"
 #include "uart.h"
 #include "clocks/clocks.h"
 #include "matrix.h"
 #include "image.h"
-#include <string.h>
-#include <math.h>
 #include "irq.h"
+#include "button.h"
+
 
 
 void init_all();
@@ -37,4 +40,5 @@ void init_all() {
   desactivate_rows();  
   image_init();
   irq_init();
+  button_init();
 }

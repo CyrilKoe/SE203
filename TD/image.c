@@ -22,7 +22,6 @@ void image_init() {
 void draw_image() {
     rgb_color row[8];
     for(int j = 0; j<8; j++){
-        desactivate_rows();
         for(int i = 0; i<8; i++)
             row[i] = my_image[i][j];
         mat_set_row(j,row);

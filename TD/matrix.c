@@ -6,7 +6,7 @@ SB=PC5 LAT=PC4 RST=PC3 SCK=PB1 SDA=PA4
 C0=PB2 C1=PA15 C2=PA2 C3=PA7 C4=PA6 C5=PA5 C6=PB0 C7=PA3
 */
 
-#define RST(x) (GPIOC -> BSRR = GPIO_BSRR_BR3 >> (16*x)
+#define RST(x) GPIOC -> BSRR = GPIO_BSRR_BR3 >> (16*x)
 #define SB(x) GPIOC -> BSRR = GPIO_BSRR_BR5 >> (16*x)
 #define LAT(x) GPIOC -> BSRR = GPIO_BSRR_BR4 >> (16*x)
 #define SDA(x) GPIOA -> BSRR = GPIO_BSRR_BR4 >> (16*x)
@@ -100,8 +100,11 @@ void mat_set_row(int row, const rgb_color *val) {
         send_byte((val+k)->g,1);
         send_byte((val+k)->r,1);
     }
-    activate_row(row);
+    desactivate_rows();
+    wait(80);
     pulse_LAT();
+    activate_row(row);
+    
 }
 
 void init_bank0() {

@@ -18,7 +18,7 @@ void button_init(void) {
 }
 
 // Toggle led verte en cas d'appui sur le bouton B2
-void EXTI3_IRQHandler(void) {
+void EXTI4_IRQHandler(void) {
   if(READ_BIT(EXTI->PR1, EXTI_PR1_PIF13)) {
     SET_BIT(EXTI->PR1, EXTI_PR1_PIF13);
     led_toggle();
