@@ -14,11 +14,16 @@ void button_init(void) {
   SET_BIT(EXTI->FTSR1, EXTI_FTSR1_FT13);
 
   //Link PB13 sur EXTI13
-  SYSCFG->EXTICR[3] = SYSCFG->EXTICR[3] & (SYSCFG_EXTICR1_EXTI3_PC << SYSCFG_EXTICR4_EXTI13_Pos);
+  //TODO MASK
+
+  MODIFY_REG(SYSCFG->EXTICR[3],SYSCFG_EXTICR4_EXTI13_Msk,SYSCFG_EXTICR4_EXTI13_PC);
+  //SYSCFG->EXTICR[3] = (SYSCFG->EXTICR[3] & (~SYSCFG_EXTICR4_EXTI13_Msk)) | (SYSCFG_EXTICR4_EXTI13_PC);
+  NVIC_EnableIRQ(40);
 }
 
 // Toggle led verte en cas d'appui sur le bouton B2
-void EXTI4_IRQHandler(void) {
+void EXTI15_10_IRQHandler(void) {
+  led(LED_BLUE);
   if(READ_BIT(EXTI->PR1, EXTI_PR1_PIF13)) {
     SET_BIT(EXTI->PR1, EXTI_PR1_PIF13);
     led_toggle();

@@ -1,6 +1,4 @@
-#include <stdint.h>
-#define VTOR_REG (*(volatile uint32_t *) 0)
-
+#include "irq.h"
 
 #define MAKE_DEFAULT_HANDLER(myIRQ) \
         void __attribute__((weak)) myIRQ(void) { \
@@ -111,7 +109,7 @@ extern uint32_t _stackptr;
 extern uint32_t _start;
 
 
-void *vector_table[] = {
+void * __attribute((section(".vectors"))) vector_table[] = {
     // Stack and Reset Handler
     &_stackptr, /* Top of stack */
     &_start,  /* Reset handler */
@@ -202,10 +200,10 @@ void *vector_table[] = {
     OTG_FS_IRQHandler,
     DMA2_CH6_IRQHandler,
     DMA2_CH7_IRQHandler,
-    LPUART1_IRQHandler,
-    QUADSPI_IRQHandler,
-    I2C3_EV_IRQHandler,
-    I2C3_ER_IRQHandler,
+    LPUART1_IRQHandler,section(".vectors")))
+    QUADSPI_IRQHandler,section(".vectors")))
+    I2C3_EV_IRQHandler,section(".vectors")))
+    I2C3_ER_IRQHandler,section(".vectors")))
     SAI1_IRQHandler,
     SAI2_IRQHandler,
     SWPMI1_IRQHandler,
@@ -217,6 +215,5 @@ void *vector_table[] = {
 };
 
 void irq_init(void) {
-    volatile uint32_t * const VTOR = (uint32_t *) 0x0;
-    *VTOR |= (uint32_t) vector_table;
+    SCB->VTOR = (uint32_t) &vector_table;
 }

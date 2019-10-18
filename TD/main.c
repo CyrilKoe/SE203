@@ -33,12 +33,12 @@ int main()
 }
 
 void init_all() {
+  irq_init();
   clocks_init();
   uart_init();
   led_init();
   matrix_init();
   desactivate_rows();  
   image_init();
-  irq_init();
   button_init();
 }

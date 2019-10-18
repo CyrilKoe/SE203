@@ -5,15 +5,17 @@ MEMORY {
 }
 
 SECTIONS {
-  .data : {
-    *vector_table*
-    *(.data)
+  .vectors : {
+    *(.vectors)
   } > sram1
   .text : {
     *(.text)
   } > sram1
   .rodata : {
     *(.rodata)
+  } > sram1
+  .data : {
+    *(.data)
   } > sram1
   .bss : {
     *(.bss) *(COMMON)

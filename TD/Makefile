@@ -19,7 +19,7 @@ endif
 CC = $(PREFIX)-gcc
 AS = $(CC)
 
-CFLAGS =  -Wall -Werror -g -O1 -mfloat-abi=hard -mfpu=fpv4-sp-d16
+CFLAGS =  -Wall -Werror -g -O1 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -ICMSIS/Device/ST/STM32L4xx/Include -ICMSIS/Include
 LDFLAGS = -T $(LINKER_SCRIPT) -Wl,--build-id=none
 ASFLAGS = -c
 
@@ -35,7 +35,7 @@ all: $(PROG)
 %.d: %.c
 	$(CC) -M -MF $@ -MP $<
 
-$(PROG): $(OBJECTS) $(LINKER_SCRIPT)
+$(PROG): $(OBJECTS)
 	$(LINK.c) $^ $(LDLIBS) -o $@
 
 raw_image.o: image.raw
