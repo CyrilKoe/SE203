@@ -1,18 +1,17 @@
 #include "irq.h"
 
-#define MAKE_DEFAULT_HANDLER(f) void __attribute__((weak)) f() {\
-                                  asm volatile("cpsid i");\
-                                  while(1){}\
-                                }
-
-extern uint8_t _start, _stackptr;
-
+#define MAKE_DEFAULT_HANDLER(myIRQ) \
+        void __attribute__((weak)) myIRQ(void) { \
+            asm volatile("cpsid i"); \
+            while(1){} \
+        }
 
 
-void default_handler() {
+void default_handler(void) {
   asm volatile("cpsid i");
-  while(1) {}
+  while(1){}
 }
+
 
 MAKE_DEFAULT_HANDLER(NMI_Handler)
 MAKE_DEFAULT_HANDLER(HardFault_Handler)
@@ -113,14 +112,16 @@ MAKE_DEFAULT_HANDLER(CAN2_RX1_IRQHandler)
 MAKE_DEFAULT_HANDLER(CAN2_SCE_IRQHandler)
 MAKE_DEFAULT_HANDLER(DMA2D_IRQHandler)
 
+extern uint32_t _stackptr;
+extern uint32_t _start;
 
 
-__attribute__((section (".vectors"))) static void * vector_table[] = {
-  // Stack and Reset Handler
-  &_stackptr,            /* Top of stack */
-  &_start,             /* Reset handler */
+void * __attribute((section(".vectors"))) vector_table[] = {
+    // Stack and Reset Handler
+    &_stackptr, /* Top of stack */
+    &_start,  /* Reset handler */
 
-  // ARM internal exceptions
+    // ARM internal exceptions
   NMI_Handler,        /* NMI handler */
   HardFault_Handler,  /* Hard Fault handler */
   MemManage_Handler,
@@ -229,9 +230,6 @@ __attribute__((section (".vectors"))) static void * vector_table[] = {
   DMA2D_IRQHandler
 };
 
-
-void irq_init() {
-    asm volatile("cpsie i");
-  //vector_table should respect constraints and be like : 0x2xxx xx00
-  SCB->VTOR = (uint32_t) vector_table;
+void irq_init(void) {
+    SCB->VTOR = (uint32_t) &vector_table;
 }
