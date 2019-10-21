@@ -34,6 +34,13 @@ void uart_init() {
   USART1->CR1 = USART1->CR1 | USART_CR1_RE;
   USART1->CR1 = USART1->CR1 | USART_CR1_TE;
 
+  //Active interrupts from UART
+  SET_BIT(USART1->CR1, USART_CR1_RXNEIE);
+  //Active EXTI26
+  SET_BIT(EXTI->IMR1, EXTI_IMR1_IM26);
+  //Active interrupts form NVIC
+  NVIC_EnableIRQ(37);
+
 }
 
 void uart_putchar(uint8_t c){
