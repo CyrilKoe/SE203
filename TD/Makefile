@@ -56,4 +56,4 @@ debug:
 
 .PHONY: tio
 tio:
-	tio -b 115200 -d 8 -s 1 -p none -f none /dev/ttyACM0
+	tio -b 38400 -d 8 -s 1 -p none -f none /dev/ttyACM0
