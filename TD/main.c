@@ -8,7 +8,7 @@ int main()
   init_all();
 
   while(1) {
-    draw_image(my_image);
+    image_draw(my_image);
   }
   
 
@@ -21,7 +21,7 @@ void init_all() {
   led_init();
   matrix_init();
   desactivate_rows();  
-  image_init(my_image);
+  image_clear(my_image);
   irq_init();
   button_init();
 }

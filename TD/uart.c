@@ -86,7 +86,58 @@ void uart_gets(uint8_t *s, size_t size){
 }
 
 void USART1_IRQHandler(void) {
-  uint8_t octet = uart_getchar();
-  if(octet == 0xff){
-  }
+
+  static uint8_t stop = 0;
+  static uint8_t i = 0;
+  static uint8_t j = 0;
+  static uint8_t k = 0;
+
+
+  if ((USART1->ISR & USART_ISR_FE) | (USART1->ISR & USART_ISR_ORE)){
+
+		stop = 1 ;
+		image_clear(my_image);
+		SET_BIT(USART1->ICR, USART_ICR_ORECF | USART_ICR_FECF);
+		return ;	
+	}
+
+	if ((USART1->ISR & USART_ISR_RXNE)){
+		
+		uint8_t octet = READ_BIT(USART1->RDR, 0xff) ; 
+    
+    uart_putchar(octet);
+
+		if (octet == 0xff) { 
+			stop = 0 ;
+			i = 0;
+      j = 0;
+      k = 0;
+		}
+		else { 
+			if (!stop) {
+				switch(k) {
+          case 0: my_image[i][j].r = octet; break;
+          case 1: my_image[i][j].g = octet; break;
+          case 2: my_image[i][j].b = octet; break;
+		 	  }
+
+        k++;
+
+        if(k > 2)
+        {
+          k=0;
+          i++;
+          if(i>7) {
+            i = 0;
+            j++;
+          }
+        }
+
+      } else
+        return;
+		}
+		
+			
+	}
+  
 }

@@ -17,7 +17,7 @@ void image_init(rgb_color image[8][8]) {
 
 }
 
-void clear_image(rgb_color image[8][8]) {
+void image_clear(rgb_color image[8][8]) {
     for(int j = 0; j < 8; j++) {
         for(int i = 0; i < 8; i++) {
             image[i][j].r = 0;
@@ -27,7 +27,7 @@ void clear_image(rgb_color image[8][8]) {
     }
 }
 
-void draw_image(rgb_color image[8][8]) {
+void image_draw(rgb_color image[8][8]) {
     rgb_color row[8];
     for(int j = 0; j<8; j++){
         for(int i = 0; i<8; i++)
