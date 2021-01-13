@@ -1,3 +1,1 @@
-# My new project
-
-This is the default README.md. Please edit me.
+Bare programming project on a STM32 with ARM architecture.
